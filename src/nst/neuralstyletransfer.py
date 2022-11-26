@@ -65,6 +65,7 @@ class NeuralStyleTransfer:
         self.nst_inputs = nst_inputs
         self.hyperparameters = hyperparameters
         self.output_image = None
+        self.epoch_outputs = None
         self.a_C = None
         self.a_S = None
 
@@ -117,12 +118,14 @@ class NeuralStyleTransfer:
             self.validate()
 
         # Training
+        self.epoch_outputs = []
         for epoch in range(epochs+1):
             J = self.train_step(self.nst_inputs.generated_img)
 
             if epoch % epoch_interval == 0:
                 print(f"Epoch {epoch}\nJ = {J}")
                 image = tensor_to_image(self.nst_inputs.generated_img)
+                self.epoch_outputs.append(image)
 
                 if type(output_dir_filename) is str:
                     image.save(output_dir_filename + str(epoch) + "." + ext)
