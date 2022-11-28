@@ -4,9 +4,21 @@ import tensorflow as tf
 from PIL import Image
 
 
+# img_dimensions = (-1, -1) means no change to the dimensions of the image
 def tf_load_img(filename, img_dimensions, prefix="../data/"):
     filepath = prefix + filename
-    img = np.array(Image.open(filepath).resize(img_dimensions))
+    image = Image.open(filepath)
+
+    (original_width, original_height) = image.size
+    (height, width) = img_dimensions
+
+    if height == -1:
+        height = original_height
+
+    if width == -1:
+        width = original_width
+
+    img = np.array(image.resize((height, width)))
     img = tf.constant(np.reshape(img, ((1,) + img.shape)))
 
     return img
