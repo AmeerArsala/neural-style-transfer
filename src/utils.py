@@ -24,7 +24,7 @@ def tf_load_img(filename, img_dimensions, prefix="../data/"):
     if width < 0:
         width = original_width
 
-    img = np.array(image.resize((height, width)))
+    img = np.array(image.resize((width, height))) # can't do (height, width) with PIL
     img = tf.constant(np.reshape(img, ((1,) + img.shape)))
 
     return img
