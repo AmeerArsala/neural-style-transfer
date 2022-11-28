@@ -4,6 +4,12 @@ import tensorflow as tf
 from PIL import Image
 
 
+# val can be either an int or a boolean
+def binary_to_opposites(val):
+    # 2n - 1
+    return (2 * val) - 1
+
+
 # img_dimensions = (-1, -1) means no change to the dimensions of the image
 def tf_load_img(filename, img_dimensions, prefix="../data/"):
     filepath = prefix + filename
